@@ -70,3 +70,5 @@ dmypy.json
 
 .vscode/
 
+logs/
+data/

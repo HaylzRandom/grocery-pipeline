@@ -1,5 +1,5 @@
 import pandas as pd
-from pipeline.transform import transform
+from pipeline.transform import transform, avg_weekly_sales_per_month
 
 
 def test_transform_filters_and_fill():
@@ -21,3 +21,23 @@ def test_transform_filters_and_fill():
     assert result["CPI"].isna().sum() == 0
     assert result["Unemployment"].isna().sum() == 0
     assert result["Weekly_Sales"].isna().sum() == 0
+
+
+def test_avg_weekly_sales_per_month():
+    df = pd.DataFrame(
+        {
+            "Date": pd.to_datetime(["2023-01-01", "2023-01-15", "2023-02-01"]),
+            "Weekly_Sales": [10000, 20000, 30000],
+        }
+    )
+
+    # Simulate transform step extracting Month from Date
+    df["Month"] = df["Date"].dt.month
+
+    agg = avg_weekly_sales_per_month(df)
+
+    assert len(agg) == 2
+    assert "Month" in agg.columns
+    assert "Avg_Sales" in agg.columns
+    assert set(agg["Month"]) == {1, 2}
+    assert agg.loc[agg["Month"] == 1, "Avg_Sales"].iloc[0] == 15000

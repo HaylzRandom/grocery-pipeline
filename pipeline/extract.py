@@ -7,7 +7,7 @@ logger = get_logger(__name__)
 
 
 # Load grocery_sales data from CSV to database
-def load_csv_to_sqlite(csv_path, db_path, table_name):
+def load_csv_to_sqlite(csv_path, db_path, table_name="sales"):
     logger.info(f"Loading CSV {csv_path} into {db_path}: {table_name}")
 
     # Get data from CSV
@@ -36,7 +36,7 @@ def load_csv_to_sqlite(csv_path, db_path, table_name):
 
 
 # Extract data from database for dataframe
-def extract_from_sql(db_path, table_name):
+def extract_from_sql(db_path, table_name="sales"):
     logger.info(f"Extracting from {db_path}: {table_name}")
 
     try:
