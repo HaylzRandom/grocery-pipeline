@@ -6,9 +6,14 @@ services:
       - ./logs:/app/logs
     command: python -m pipeline.main
 
-  test:
-    build: .
+  make-data:
+    extends: pipeline
+    command: python scripts/make_sample_data.py
+
+  dry-run:
+    extends: pipeline
+    command: python -m pipeline.main --dry-run
+
+  tests:
+    extends: pipeline
     command: pytest -v
-    volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs

@@ -1,0 +1,21 @@
+name: Full Run
+
+on:
+  workflow_dispatch: # run manually in GitHub UI
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate sample data
+        run: docker-compose run --rm make-data
+      - name: Run ETL pipeline
+        run: docker-compose run --rm pipeline
+      - name: Upload outputs
+        uses: actions/upload-artifact@v3
+        with:
+          name: pipeline-outputs
+          path: |
+            data/*.csv
+            logs/*.log

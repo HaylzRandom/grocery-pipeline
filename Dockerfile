@@ -7,6 +7,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY pipeline/ pipeline/
+COPY scripts/ scripts/
 COPY tests/ tests/
 
 ENV PYTHONPATH=/app
