@@ -1,7 +1,13 @@
 name: Full Run
 
 on:
-  [push, pull_request]
+  push:
+    branches:
+      - main
+      - '**'
+  pull_request:
+    branches:
+      - main
   schedule:
     - cron: '0 23 * * 0'
 
