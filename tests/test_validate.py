@@ -18,9 +18,19 @@ def test_validate_missing(tmp_path):
         validate(path)
 
 
-def test_validate_empty(tmp_path):
+def test_validate_empty_dataframe(tmp_path):
+    # Case: file has headers but no rows
     path = tmp_path / "empty.csv"
-    pd.DataFrame().to_csv(path, index=False)
+    pd.DataFrame(columns=["a", "b"]).to_csv(path, index=False)
+
+    with pytest.raises(ValueError, match="empty"):
+        validate(path)
+
+
+def test_validate_zero_byte_file(tmp_path):
+    # Case: file exists but no content
+    path = tmp_path / "blank.csv"
+    path.write_text("")
 
     with pytest.raises(ValueError, match="empty"):
         validate(path)

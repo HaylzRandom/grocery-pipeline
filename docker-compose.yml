@@ -4,15 +4,13 @@ services:
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
-    command: python -m pipeline.main
-
-  make-data:
-    extends: pipeline
-    command: python scripts/make_sample_data.py
+    command: >
+      sh -c "python scripts/make_sample_data.py && python -m pipeline.main"
 
   dry-run:
     extends: pipeline
-    command: python -m pipeline.main --dry-run
+    command: >
+      sh -c "python scripts/make_sample_data.py && python -m pipeline.main --dry-run"
 
   tests:
     extends: pipeline

@@ -8,9 +8,6 @@ mkdir -p data logs
 echo "🚀 Building Docker image..."
 docker-compose build
 
-echo "🧪 Generating sample data..."
-docker-compose run --rm pipeline python scripts/make_sample_data.py
-
 echo "▶️ Running full pipeline..."
 docker-compose run --rm pipeline
 

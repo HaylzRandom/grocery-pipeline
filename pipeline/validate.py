@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from pandas.errors import EmptyDataError
 from pipeline.logger import get_logger
 
 logger = get_logger(__name__)
@@ -14,6 +15,9 @@ def validate(file_path):
 
     try:
         df = pd.read_csv(file_path)
+    except EmptyDataError:
+        logger.critical(f"Validation failed: {file_path} is empty")
+        raise ValueError(f"Validation failed: {file_path} is empty")
     except Exception as e:
         logger.critical(f"Validation failed: Could not read {file_path} -> {e}")
         raise

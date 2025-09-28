@@ -5,7 +5,6 @@ import logging
 import pandas as pd
 
 
-@pytest.mark.integration
 def test_pipeline_dry_run(tmp_path, caplog):
     # Capture logs from pipeline loggers
     logging.getLogger("pipeline").propagate = True
